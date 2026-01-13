@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>馬年揮春計算機</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f5e9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e6d6b8;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #c62828 0%, #8b0000 100%);
+            color: #ffeb3b;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #ff9800;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            margin: 15px 0 0;
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+        
+        .products-section {
+            flex: 3;
+            min-width: 300px;
+            padding: 25px;
+            border-right: 1px dashed #e6d6b8;
+        }
+        
+        .summary-section {
+            flex: 2;
+            min-width: 280px;
+            padding: 25px;
+            background-color: #fffef9;
+        }
+        
+        .product-category {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-title {
+            color: #c62828;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffcc80;
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-title i {
+            margin-right: 10px;
+            color: #ff9800;
+        }
+        
+        .size-option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #fffaf0;
+            border-radius: 10px;
+            border: 1px solid #f0e6d6;
+        }
+        
+        .size-info {
+            flex: 2;
+        }
+        
+        .size-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #5d4037;
+        }
+        
+        .size-dimension {
+            color: #8d6e63;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .size-price {
+            flex: 1;
+            font-weight: bold;
+            color: #c62828;
+            font-size: 1.2rem;
+            text-align: right;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            background-color: #ffcc80;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #ffb74d;
+        }
+        
+        .quantity-display {
+            margin: 0 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .promo-notice {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .summary-box {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0e6d6;
+        }
+        
+        .summary-title {
+            color: #c62828;
+            margin-top: 0;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffcc80;
+            font-size: 1.5rem;
+        }
+        
+        .summary-details {
+            margin: 20px 0;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .free-item {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .total-row {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #c62828;
+            border-top: 2px solid #ffcc80;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .free-item-list {
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #c5e1a5;
+        }
+        
+        .free-item-title {
+            color: #558b2f;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .promo-alert {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8d6e63;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            background-color: #fffef9;
+        }
+        
+        .selected-count {
+            background-color: #ffcc80;
+            color: #5d4037;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.9rem;
+            margin-left: 8px;
+            display: inline-block;
+        }
+        
+        .promo-badge {
+            background-color: #4caf50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .products-section {
+                border-right: none;
+                border-bottom: 1px dashed #e6d6b8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-horse"></i> 馬年揮春計算機</h1>
+            <p>買滿兩套揮春，額外贈送一套揮春 (免費商品以較低價格的商品為主)</p>
+        </header>
+        
+        <div class="content">
+            <section class="products-section">
+                <div class="product-category">
+                    <h2 class="product-title"><i class="fas fa-horse-head"></i> A款 - 騎馬仔 (一對)</h2>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">20cm x 20cm</div>
+                            <div class="size-dimension">尺寸: 20cm × 20cm (一對)</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="A" data-size="small">-</button>
+                                <span class="quantity-display" id="quantity-A-small">0</span>
+                                <button class="quantity-btn plus" data-product="A" data-size="small">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$128</div>
+                    </div>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">30cm x 30cm</div>
+                            <div class="size-dimension">尺寸: 30cm × 30cm (一對)</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="A" data-size="large">-</button>
+                                <span class="quantity-display" id="quantity-A-large">0</span>
+                                <button class="quantity-btn plus" data-product="A" data-size="large">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$148</div>
+                    </div>
+                </div>
+                
+                <div class="product-category">
+                    <h2 class="product-title"><i class="fas fa-gem"></i> B款 - 財神到</h2>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">30cm x 30cm</div>
+                            <div class="size-dimension">尺寸: 30cm × 30cm</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="B" data-size="small">-</button>
+                                <span class="quantity-display" id="quantity-B-small">0</span>
+                                <button class="quantity-btn plus" data-product="B" data-size="small">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$148</div>
+                    </div>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">40cm x 40cm</div>
+                            <div class="size-dimension">尺寸: 40cm × 40cm</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="B" data-size="large">-</button>
+                                <span class="quantity-display" id="quantity-B-large">0</span>
+                                <button class="quantity-btn plus" data-product="B" data-size="large">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$168</div>
+                    </div>
+                </div>
+                
+                <div class="product-category">
+                    <h2 class="product-title"><i class="fas fa-horse"></i> C款 - 運財馬仔 (一對)</h2>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">20cm x 20cm</div>
+                            <div class="size-dimension">尺寸: 20cm × 20cm (一對)</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="C" data-size="small">-</button>
+                                <span class="quantity-display" id="quantity-C-small">0</span>
+                                <button class="quantity-btn plus" data-product="C" data-size="small">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$128</div>
+                    </div>
+                    
+                    <div class="size-option">
+                        <div class="size-info">
+                            <div class="size-name">30cm x 30cm</div>
+                            <div class="size-dimension">尺寸: 30cm × 30cm (一對)</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-product="C" data-size="large">-</button>
+                                <span class="quantity-display" id="quantity-C-large">0</span>
+                                <button class="quantity-btn plus" data-product="C" data-size="large">+</button>
+                            </div>
+                        </div>
+                        <div class="size-price">$148</div>
+                    </div>
+                </div>
+                
+                <div class="promo-notice">
+                    <h3><i class="fas fa-gift"></i> 優惠詳情</h3>
+                    <p><strong>買二送一：</strong>每購買兩套揮春，即可額外獲贈一套免費揮春！</p>
+                    <p><strong>計算規則：</strong></p>
+                    <ul>
+                        <li>購買2套 → 支付2套價格，獲得3套（1套免費）</li>
+                        <li>購買4套 → 支付3套價格，獲得4套（1套免費）</li>
+                        <li>購買6套 → 支付4套價格，獲得6套（2套免費）</li>
+                        <li>購買8套 → 支付6套價格，獲得8套（2套免費）</li>
+                    </ul>
+                    <p><strong>免費商品選擇：</strong>免費商品以較低價格的商品為主。</p>
+                </div>
+            </section>
+            
+            <section class="summary-section">
+                <div class="summary-box">
+                    <h3 class="summary-title">訂單摘要 <span class="selected-count" id="total-items">0</span></h3>
+                    
+                    <div id="promo-alert-container"></div>
+                    
+                    <div class="summary-details" id="order-summary">
+                        <div style="text-align: center; padding: 20px; color: #8d6e63;">
+                            <i class="fas fa-shopping-cart fa-2x" style="margin-bottom: 15px;"></i>
+                            <p>請選擇揮春款式和尺寸</p>
+                        </div>
+                    </div>
+                    
+                    <div class="free-item-list" id="free-items-section" style="display: none;">
+                        <div class="free-item-title"><i class="fas fa-star"></i> 免費贈送商品</div>
+                        <div id="free-items-list"></div>
+                    </div>
+                    
+                    <button class="reset-btn" id="reset-btn">
+                        <i class="fas fa-redo"></i> 重置選擇
+                    </button>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>© 2023 馬年揮春計算機 | 買二送一優惠活動</p>
+        </footer>
+    </div>
+
+    <script>
+        // 商品價格數據
+        const products = {
+            'A': { name: '騎馬仔 (一對)', small: { price: 128, size: '20cm x 20cm' }, large: { price: 148, size: '30cm x 30cm' } },
+            'B': { name: '財神到', small: { price: 148, size: '30cm x 30cm' }, large: { price: 168, size: '40cm x 40cm' } },
+            'C': { name: '運財馬仔 (一對)', small: { price: 128, size: '20cm x 20cm' }, large: { price: 148, size: '30cm x 30cm' } }
+        };
+
+        // 購物車數據
+        let cart = {
+            'A-small': 0,
+            'A-large': 0,
+            'B-small': 0,
+            'B-large': 0,
+            'C-small': 0,
+            'C-large': 0
+        };
+
+        // 初始化頁面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 為所有按鈕添加事件監聽器
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const product = this.getAttribute('data-product');
+                    const size = this.getAttribute('data-size');
+                    const key = `${product}-${size}`;
+                    
+                    if (this.classList.contains('plus')) {
+                        cart[key]++;
+                    } else if (this.classList.contains('minus')) {
+                        if (cart[key] > 0) {
+                            cart[key]--;
+                        }
+                    }
+                    
+                    updateDisplay();
+                    updateSummary();
+                });
+            });
+            
+            // 重置按鈕
+            document.getElementById('reset-btn').addEventListener('click', function() {
+                if (confirm('確定要重置所有選擇嗎？')) {
+                    resetCart();
+                    updateDisplay();
+                    updateSummary();
+                }
+            });
+            
+            updateDisplay();
+        });
+
+        // 更新數量顯示
+        function updateDisplay() {
+            for (const key in cart) {
+                document.getElementById(`quantity-${key}`).textContent = cart[key];
+            }
+        }
+
+        // 重置購物車
+        function resetCart() {
+            for (const key in cart) {
+                cart[key] = 0;
+            }
+        }
+
+        // 更新訂單摘要
+        function updateSummary() {
+            const summaryElement = document.getElementById('order-summary');
+            const freeItemsSection = document.getElementById('free-items-section');
+            const freeItemsList = document.getElementById('free-items-list');
+            const totalItemsElement = document.getElementById('total-items');
+            const promoAlertContainer = document.getElementById('promo-alert-container');
+            
+            // 收集所有選擇的商品
+            let allItems = [];
+            let totalSelectedItems = 0;
+            
+            for (const key in cart) {
+                if (cart[key] > 0) {
+                    const [product, size] = key.split('-');
+                    const productData = products[product];
+                    const sizeData = size === 'small' ? productData.small : productData.large;
+                    
+                    for (let i = 0; i < cart[key]; i++) {
+                        allItems.push({
+                            name: productData.name,
+                            size: sizeData.size,
+                            price: sizeData.price,
+                            key: key,
+                            id: `${key}-${Date.now()}-${Math.random()}`
+                        });
+                        totalSelectedItems++;
+                    }
+                }
+            }
+            
+            // 更新總商品數量顯示
+            totalItemsElement.textContent = totalSelectedItems;
+            
+            // 清空提示區域
+            promoAlertContainer.innerHTML = '';
+            
+            // 計算優惠
+            // 購買N套，支付M套價格，獲得N套商品
+            // M = Math.ceil(N * 2 / 3)
+            const payCount = Math.ceil(totalSelectedItems * 2 / 3);
+            const freeCount = totalSelectedItems - payCount;
+            
+            // 顯示優惠提醒
+            if (totalSelectedItems >= 2) {
+                let alertMessage = '';
+                if (totalSelectedItems === 2) {
+                    alertMessage = `您選擇了2套揮春，可以免費獲得1套贈送的揮春！總共獲得3套，只需支付2套的價格。`;
+                } else if (totalSelectedItems === 3) {
+                    alertMessage = `您選擇了3套揮春，符合1組「買二送一」優惠，只需支付2套的價格！`;
+                } else if (totalSelectedItems === 4) {
+                    alertMessage = `您選擇了4套揮春，可以免費獲得1套贈送的揮春！總共獲得4套，只需支付3套的價格。`;
+                } else if (totalSelectedItems === 5) {
+                    alertMessage = `您選擇了5套揮春，可以免費獲得1套贈送的揮春！總共獲得5套，只需支付4套的價格。`;
+                } else if (totalSelectedItems === 6) {
+                    alertMessage = `您選擇了6套揮春，可以免費獲得2套贈送的揮春！總共獲得6套，只需支付4套的價格。`;
+                } else {
+                    alertMessage = `您選擇了${totalSelectedItems}套揮春，可以免費獲得${freeCount}套贈送的揮春！總共獲得${totalSelectedItems}套，只需支付${payCount}套的價格。`;
+                }
+                
+                if (totalSelectedItems > 0) {
+                    promoAlertContainer.innerHTML = `
+                        <div class="promo-alert">
+                            <i class="fas fa-gift"></i> ${alertMessage}
+                        </div>
+                    `;
+                }
+            } else if (totalSelectedItems === 1) {
+                promoAlertContainer.innerHTML = `
+                    <div class="promo-alert">
+                        <i class="fas fa-info-circle"></i> 您已選擇1套揮春，再選1套即可獲贈1套免費揮春！
+                    </div>
+                `;
+            }
+            
+            // 計算哪些商品需要付費，哪些是免費的
+            let paidItems = [];
+            let freeItems = [];
+            
+            if (freeCount > 0 && allItems.length > 0) {
+                // 複製並按價格排序（從低到高）
+                let sortedItems = [...allItems].sort((a, b) => a.price - b.price);
+                
+                // 最便宜的商品作為免費商品
+                for (let i = 0; i < freeCount && i < sortedItems.length; i++) {
+                    freeItems.push(sortedItems[i]);
+                }
+                
+                // 其餘商品需要付費
+                // 創建免費商品的ID映射
+                let freeItemIds = {};
+                freeItems.forEach(item => {
+                    freeItemIds[item.id] = true;
+                });
+                
+                paidItems = allItems.filter(item => !freeItemIds[item.id]);
+            } else {
+                // 沒有優惠或沒有免費商品
+                paidItems = [...allItems];
+            }
+            
+            // 計算總支付金額
+            const totalToPay = paidItems.reduce((sum, item) => sum + item.price, 0);
+            
+            // 生成訂單摘要HTML
+            if (allItems.length === 0) {
+                summaryElement.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #8d6e63;">
+                        <i class="fas fa-shopping-cart fa-2x" style="margin-bottom: 15px;"></i>
+                        <p>請選擇揮春款式和尺寸</p>
+                    </div>
+                `;
+                freeItemsSection.style.display = 'none';
+                return;
+            }
+            
+            let summaryHTML = '';
+            
+            // 添加付費商品（合併相同商品）
+            if (paidItems.length > 0) {
+                const paidItemsMap = {};
+                paidItems.forEach(item => {
+                    const key = `${item.name}-${item.size}-${item.price}`;
+                    if (!paidItemsMap[key]) {
+                        paidItemsMap[key] = { ...item, quantity: 0 };
+                    }
+                    paidItemsMap[key].quantity++;
+                });
+                
+                // 顯示合併後的付費商品
+                Object.values(paidItemsMap).forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    summaryHTML += `
+                        <div class="summary-row">
+                            <div>${item.name} - ${item.size} <span class="promo-badge">${item.quantity}套</span></div>
+                            <div>$${itemTotal}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // 添加免費商品區域
+            if (freeItems.length > 0) {
+                freeItemsSection.style.display = 'block';
+                
+                // 合併相同免費商品
+                const freeItemsMap = {};
+                freeItems.forEach(item => {
+                    const key = `${item.name}-${item.size}-${item.price}`;
+                    if (!freeItemsMap[key]) {
+                        freeItemsMap[key] = { ...item, quantity: 0 };
+                    }
+                    freeItemsMap[key].quantity++;
+                });
+                
+                let freeItemsHTML = '';
+                Object.values(freeItemsMap).forEach(item => {
+                    const itemTotalValue = item.price * item.quantity;
+                    freeItemsHTML += `
+                        <div style="margin: 5px 0; color: #7cb342;">
+                            <i class="fas fa-gift"></i> ${item.name} - ${item.size} 
+                            <span style="color: #388e3c;">(${item.quantity}套，價值: $${itemTotalValue})</span>
+                        </div>
+                    `;
+                });
+                freeItemsList.innerHTML = freeItemsHTML;
+                
+                // 在摘要中添加免費商品行
+                const freeItemsTotalValue = freeItems.reduce((sum, item) => sum + item.price, 0);
+                summaryHTML += `
+                    <div class="summary-row free-item">
+                        <div>免費贈送商品 <span class="promo-badge">${freeItems.length}套</span></div>
+                        <div>價值 $${freeItemsTotalValue}</div>
+                    </div>
+                `;
+            } else {
+                freeItemsSection.style.display = 'none';
+            }
+            
+            // 添加總計行
+            summaryHTML += `
+                <div class="summary-row total-row">
+                    <div>總計 <span style="font-size: 0.9rem;">(獲得 ${totalSelectedItems} 套揮春)</span></div>
+                    <div>$${totalToPay}</div>
+                </div>
+            `;
+            
+            summaryElement.innerHTML = summaryHTML;
+            
+            // 測試用例輸出（供調試用）
+            console.log(`選擇套數: ${totalSelectedItems}, 支付套數: ${payCount}, 免費套數: ${freeCount}`);
+            console.log(`總支付金額: $${totalToPay}`);
+        }
+    </script>
+</body>
+</html>
